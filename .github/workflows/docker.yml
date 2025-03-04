@@ -1,0 +1,20 @@
+name : docker install
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  rundockercommand:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v3
+
+      - name: Grant access to file
+        run: chmod +x install_docker.sh
+
+      - name: run scripts
+        run: ./install_docker.sh
