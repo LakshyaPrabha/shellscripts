@@ -1,0 +1,20 @@
+name: CI Pipeline
+
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  run-shell-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Grant Execute Permissions
+        run: chmod +x 01_basic.sh
+
+      - name: Run Shell Script
+        run: ./01_basic.sh
