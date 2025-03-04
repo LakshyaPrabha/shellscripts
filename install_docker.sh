@@ -1,31 +1,39 @@
 #!/bin/bash
 
-# update system package
+# Update system package
+echo "Updating system packages..."
 sudo apt update -y
 
-# Install docker 
+# Install Docker if not installed
 if ! command -v docker &> /dev/null
 then
-    echo "Docker not found . Installing..."
+    echo "Docker not found. Installing..."
     sudo apt install -y docker.io
     sudo systemctl enable docker
     sudo systemctl start docker
 else
-   echo "Docker install already"
+    echo "Docker is already installed."
 fi
 
-echo "Check  docker version"
- docker --version
+# Check Docker version
+echo "Checking Docker version..."
+docker --version
 
- # Pull hello-world image
-  echo "Pulling Hello-world"
-  sudo docker pull hello-world
+# Pull the hello-world image
+echo "Pulling Hello World image..."
+sudo docker pull hello-world
 
+# Run hello-world container and store the container ID
+echo "Running Hello World container..."
+container_id=$(sudo docker run -d hello-world)  # Runs in detached mode and stores the container ID
 
-  echo "Runnig hello-world container..."
-  sudo docker run hello-world 
+# Wait for a few seconds before starting
+sleep 2
 
+# Start the container using dynamic ID
+echo "Starting Hello World container..."
+sudo docker start "$container_id"
 
-
-echo "Start hello-world"
-sudo docker start 2baf4d7bfe4d  
+# Display running containers
+echo "Listing running containers..."
+sudo docker ps -a
